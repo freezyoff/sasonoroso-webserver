@@ -1,0 +1,27 @@
+{
+  "name": "sasonoroso-webserver",
+  "version": "1.0.0",
+  "description": "Aplikasi Sales Sasonoroso",
+  "keywords": [
+    "sasonoroso"
+  ],
+  "homepage": "https://github.com/freezyoff/sasonoroso-webserver#readme",
+  "bugs": {
+    "url": "https://github.com/freezyoff/sasonoroso-webserver/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freezyoff/sasonoroso-webserver.git"
+  },
+  "license": "ISC",
+  "author": "freezyoff",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  }
+}
