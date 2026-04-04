@@ -1,14 +1,16 @@
 import express from 'express'; //{ Request, Response }
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import Config, {filePath as ConfigPath, type as ConfigType}from "./tests/config.ts"
+import Config, {EnvEnum, filePath as ConfigPath, type as ConfigType}from "./tests/config.ts"
 
 /**
  * load configuration files
  */
-console.log(`Loading .env file: ${ConfigType}`);
-console.log(`Host URL: ${Config.SERVER_HOST}`);
-console.log(`Database URL: ${Config.DB_HOST}`);
+if (ConfigType == EnvEnum.dev || ConfigType == EnvEnum.test){
+  console.log(`Loading .env file: ${ConfigType}`);
+  console.log(`Host URL: ${Config.SERVER_HOST}`);
+  console.log(`Database URL: ${Config.DB_HOST}`);
+}
 
 /**
  * Load Express

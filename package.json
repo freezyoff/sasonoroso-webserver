@@ -20,6 +20,8 @@
   "scripts": {
     "start": "SET NODE_ENV=production && node dist/index.js",
     "dev": "SET NODE_ENV=development && nodemon --exec ts-node --esm src/index.ts",
+    "dev:db:migrate": "SET NODE_ENV=development && npx sequelize db:migrate --env development",
+    "dev:db:undo:all": "SET NODE_ENV=development && npx sequelize db:migrate:undo:all --env development",
     "build": "npx tsc",
     "test": "SET NODE_ENV=test && ts-mocha --",
     "test:all": "SET NODE_ENV=test && ts-mocha --recursive src/tests/**/**.spec.ts"
