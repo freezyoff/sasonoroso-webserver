@@ -1,12 +1,26 @@
 import express, { Router } from 'express';
-import HttpUserController from "./../http/user.js";
+import * as UserCtrl from "./../http/user.js";
+import * as ProductCtrl from "./../http/product.js";
+import * as PartnerCtrl from "./../http/partner.js";
 const router = Router();
 router.use(express.json());
-/***
- * API Routes
- * /api/user/*
+/**
+ * API: /api/user/*
  */
-router.post('/user/fetch', HttpUserController.reqFetchValidation, HttpUserController.reqFetchHandler);
-router.post('/user/save', HttpUserController.reqSaveValidation, HttpUserController.reqSaveHandler);
+router.post('/user/fetch', UserCtrl.fetchValidation, UserCtrl.fetchHandler);
+router.post('/user/save', UserCtrl.saveValidation, UserCtrl.saveHandler);
+router.post('/user/remove', UserCtrl.removeValidation, UserCtrl.removeHandler);
+/**
+ * API: /api/product/*
+ */
+router.post('/product/fetch', ProductCtrl.fetchValidation, ProductCtrl.fetchHandler);
+router.post('/product/save', ProductCtrl.saveValidation, ProductCtrl.saveHandler);
+router.post('/product/remove', ProductCtrl.removeValidation, ProductCtrl.removeHandler);
+/**
+ * API: /api/partner/*
+ */
+router.post('/partner/fetch', PartnerCtrl.fetchValidation, PartnerCtrl.fetchHandler);
+router.post('/partner/save', PartnerCtrl.saveValidation, PartnerCtrl.saveHandler);
+router.post('/partner/remove', PartnerCtrl.removeValidation, PartnerCtrl.removeHandler);
 export default router;
 //# sourceMappingURL=api.js.map

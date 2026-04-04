@@ -1,0 +1,1 @@
+{"version":3,"file":"20260326152754-create_table_user.d.ts","sourceRoot":"","sources":["../../../src/database/migrations/20260326152754-create_table_user.ts"],"names":[],"mappings":"AAEA,OAAO,EACL,cAAc,EAKR,MAAM,WAAW,CAAC;AAE1B,eAAO,MAAM,SAAS,UAAU,CAAC;AAEjC,gDAAgD;;uBAErB,cAAc;yBAgBZ,cAAc;;AAjB3C,wBAoBE"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"20260331093945-create_table_products.d.ts","sourceRoot":"","sources":["../../../src/database/migrations/20260331093945-create_table_products.ts"],"names":[],"mappings":"AAEA,OAAO,EAAsC,KAAK,cAAc,EAAQ,MAAM,WAAW,CAAC;AAE1F,eAAO,MAAM,SAAS,aAAa,CAAC;AAEpC,gDAAgD;;uBAErB,cAAc;yBAcZ,cAAc;;AAf3C,wBAkBE"}

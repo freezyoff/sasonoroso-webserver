@@ -1,0 +1,14 @@
+import sequelize from "./pool.js";
+import { IUser } from "./user.js";
+import { IPartner } from "./partner.js";
+import { IConsigment, IConsignmentDetail, IConsignmentPayed, IConsignmentSold } from "./order.js";
+import { IProduct } from "./product.js";
+IConsigment.belongsTo(IPartner, { foreignKey: 'id', as: 'partner' });
+IConsigment.hasMany(IConsignmentDetail, { foreignKey: 'orderId', as: 'products' });
+IConsigment.hasMany(IConsignmentSold, { foreignKey: 'orderId', as: 'solds' });
+IConsigment.hasMany(IConsignmentPayed, { foreignKey: 'orderId', as: 'payments' });
+IConsignmentDetail.belongsTo(IConsigment, { foreignKey: 'id', as: 'consign' });
+IConsignmentSold.belongsTo(IConsigment, { foreignKey: 'id', as: 'consign' });
+IConsignmentPayed.belongsTo(IConsigment, { foreignKey: 'id', as: 'consign' });
+export { sequelize, IUser, IProduct, IPartner, IConsigment, IConsignmentDetail, IConsignmentPayed, IConsignmentSold };
+//# sourceMappingURL=db.js.map

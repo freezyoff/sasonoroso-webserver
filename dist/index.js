@@ -1,7 +1,7 @@
 import express from 'express'; //{ Request, Response }
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import Config, { filePath as ConfigPath, type as ConfigType } from "./lib/config.js";
+import Config, { filePath as ConfigPath, type as ConfigType } from "./tests/config.js";
 /**
  * load configuration files
  */
@@ -17,7 +17,8 @@ app.use('/api', ApiRouter);
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-app.listen(Config.SERVER_PORT, () => {
+const server = app.listen(Config.SERVER_PORT, () => {
     console.log(`Example app listening on port ${Config.SERVER_PORT}`);
 });
+export { app, server };
 //# sourceMappingURL=index.js.map

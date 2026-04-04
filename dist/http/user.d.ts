@@ -1,9 +1,8 @@
-import { type Request, type Response, type NextFunction } from 'express';
-declare class HttpUserController {
-    static reqFetchHandler(req: Request, res: Response): Promise<void>;
-    static reqFetchValidation(req: Request, res: Response, next: NextFunction): Promise<void>;
-    static reqSaveHandler(req: Request, res: Response): Promise<void>;
-    static reqSaveValidation(req: Request, res: Response, next: NextFunction): Promise<void>;
-}
-export default HttpUserController;
+import { type Request, type Response, type RequestHandler } from 'express';
+export declare const fetchValidation: RequestHandler;
+export declare const fetchHandler: RequestHandler;
+export declare const removeValidation: RequestHandler;
+export declare const removeHandler: RequestHandler;
+export declare const saveValidation: RequestHandler;
+export declare const saveHandler: (req: Request, res: Response) => Promise<void>;
 //# sourceMappingURL=user.d.ts.map
