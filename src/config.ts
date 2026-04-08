@@ -45,6 +45,11 @@ else{
 export const type:EnvType =  tt;
 export const filePath = path.resolve(process.cwd(), `.env.${type}`);
 
-dotenv.config({ path: filePath, override: true });
+if (runOnVercel){
+  process.env.SERVER_PORT = process.env.PORT;
+}
+else{
+  dotenv.config({ path: filePath, override: true });
+}
 
 export default process.env;
