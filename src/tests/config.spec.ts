@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import {describe} from 'mocha'
-import Config, {filePath, type} from './config.ts'
+import Config, {filePath, type} from './../config.ts'
 
 describe('> lib/config.js', () => {
     it('should match environment"', () => {

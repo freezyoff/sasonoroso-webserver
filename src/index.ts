@@ -1,7 +1,7 @@
 import express from 'express'; //{ Request, Response }
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import Config, {EnvEnum, filePath as ConfigPath, type as ConfigType}from "./tests/config.ts"
+import Config, {EnvEnum, filePath as ConfigPath, type as ConfigType}from "./config.ts"
 
 /**
  * load configuration files
@@ -15,17 +15,17 @@ if (ConfigType == EnvEnum.dev || ConfigType == EnvEnum.test){
 /**
  * Load Express
  */
-const app = express();
+export const app = express();
 
 import ApiRouter from './routes/api.ts';
 app.use('/api', ApiRouter);
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World from SASONOROSO!');
 });
 
-const server = app.listen(Config.SERVER_PORT, () => {
-  console.log(`Example app listening on port ${Config.SERVER_PORT}`);
+export const server = app.listen(Config.port, () => {
+  console.log(`Sasonoroso listening on port ${Config.port}`);
 });
 
-export {app, server}
+export default app

@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import Config, {type as ConfigType, EnvEnum} from '../../tests/config.ts'
+import Config, {type as ConfigType, EnvEnum} from './../../config.ts'
 import mysql2 from 'mysql2';
 
 export default new Sequelize(

@@ -29,9 +29,9 @@ describe('> database/models/user.ts', () => {
 
     const newUser = await IUser.create(data); 
 
-    const instance = await IUser.findByPk(1, { rejectOnEmpty: true });
+    const instance = await IUser.findByPk(newUser.id, { rejectOnEmpty: true });
     expect(instance.id).equal(newUser.id);
-    expect(data.usrName).equal(instance.usrName);
+    expect(instance.usrName).equal(data.usrName);
   });
 
   it('drop table `users`', async function() {

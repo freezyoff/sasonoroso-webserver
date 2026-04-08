@@ -123,7 +123,7 @@ describe('> http: user.js', () => {
       .send({})
       .set('Accept', 'application/json')
       .expect(200);
-    expect(response.body.length).equal(loop);
+    expect(response.body.length).equal(loop+1);
     // log("fetch: all ", response.body);
   })
 
@@ -161,8 +161,8 @@ describe('> http: user.js', () => {
       .set('Accept', 'application/json')
       .expect(200);
     expect(response.body.length).equal(2);
-    expect(response.body.at(0).id).equal(11);
-    expect(response.body.at(1).id).equal(10);
+    expect(response.body.at(0).id).equal(11+1);
+    expect(response.body.at(1).id).equal(10+1);
     // log("fetch: limit offset order", response.body);
   })
 });

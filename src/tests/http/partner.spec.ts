@@ -2,7 +2,7 @@ import * as chai from 'chai';
 import request from 'supertest';
 import {describe} from 'mocha'
 
-import {server, app} from '../../index.ts'
+import {app, server} from '../../index.ts'
 import sequelize from '../../database/models/pool.ts';
 
 const expect = chai.expect;
@@ -21,7 +21,6 @@ describe('> http: user.js', () => {
 
   after(async ()=>{
     await MIG_PARTNER.down(sequelize.getQueryInterface());
-    server.close();
   })
 
   it('save: empty JSON', async ()=>{
