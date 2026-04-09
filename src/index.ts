@@ -1,17 +1,14 @@
 import express from 'express'; //{ Request, Response }
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import Config, {EnvEnum, filePath as ConfigPath, type as ConfigType}from "./config.ts"
+import Config, {EnvEnum} from "./config.ts"
+import ConfigImpl from './config.ts';
 
 /**
  * load configuration files
  */
-if (ConfigType == EnvEnum.dev || ConfigType == EnvEnum.test){
-  console.log(`Loading .env file: ${ConfigType}`);
-  console.log(`Listen URL: ${Config.SERVER_HOST}`);
-  console.log(`Listen Port: ${Config.SERVER_PORT}`);
-  console.log(`Host URL: ${Config.SERVER_HOST}`);
-  console.log(`Database URL: ${Config.DB_HOST}`);
+if (Config.env == EnvEnum.dev || Config.env == EnvEnum.test){
+  console.log(ConfigImpl);
 }
 
 /**
@@ -19,15 +16,15 @@ if (ConfigType == EnvEnum.dev || ConfigType == EnvEnum.test){
  */
 export const app = express();
 
-// import ApiRouter from './routes/api.ts';
-// app.use('/api', ApiRouter);
+import ApiRouter from './routes/api.ts';
+app.use('/api', ApiRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World from SASONOROSO!');
 });
 
-export const server = app.listen(Config.SERVER_PORT, () => {
-  console.log(`Sasonoroso listening on port ${Config.port}`);
+export const server = app.listen(Config.server.port, () => {
+  console.log(`Sasonoroso listening on port ${Config.server.port}`);
 });
 
 export default app

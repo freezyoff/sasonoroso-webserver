@@ -1,18 +1,18 @@
 import { Sequelize } from 'sequelize';
-import Config, {type as ConfigType, EnvEnum} from './../../config.ts'
+import Config, { EnvEnum } from './../../config.ts'
 import mysql2 from 'mysql2';
 
 export default new Sequelize(
-  Config.DB_SCHEMA!,
-  Config.DB_USR!,
-  Config.DB_PWD!,
+  Config.database.schema,
+  Config.database.user,
+  Config.database.password,
   {
-    logging: ConfigType == EnvEnum.test || ConfigType == EnvEnum.prod? false : true,
+    logging: Config.env == EnvEnum.test || Config.env == EnvEnum.prod? false : true,
     // logging: ConfigType == EnvEnum.prod? false : true,
     dialect: 'mysql',
     dialectModule: mysql2,
-    host: Config.DB_HOST!,
-    port: Number.parseInt(Config.DB_PORT!),
-    pool: {max: Number.parseInt(Config.DB_POOL!), idle: 3000}
+    host: Config.database.host,
+    port: Config.database.port,
+    pool: {max: Config.database.max_pool, idle: 3000}
   }
 );

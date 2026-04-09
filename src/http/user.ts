@@ -41,7 +41,7 @@ export const fetchValidation:RequestHandler = (req:Request, res:Response, next:N
 
 export const fetchHandler:RequestHandler = async (req:Request, res:Response)=>{
 	const body:UserFetchReqParams = req.body;
-
+	console.log(body);
 	let opt = {};
 	if (paramExistsAndNotNull('order', body)){
 		Object.assign(opt, {order: body.order});

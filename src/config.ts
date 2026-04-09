@@ -2,10 +2,19 @@ import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { paramExistsAndNotNull } from './http/helpers.ts';
 
-// check if run on vercel
-var runOnVercel = false;
-if (paramExistsAndNotNull('VERCEL_ENV', process.env)){
-  runOnVercel = true;
+interface ConfigServer{
+  host:string
+  port:number
+}
+
+interface ConfigDatabase{
+  host: string,
+  user: string,
+  password: string,
+  schema: string,
+  port: number,
+  max_pool: number,
+  dialect: string
 }
 
 export const EnvEnum = {
@@ -16,40 +25,68 @@ export const EnvEnum = {
 
 export type EnvType = typeof EnvEnum[keyof typeof EnvEnum];
 
-var tt:EnvType;
-if (runOnVercel){
+class ConfigImpl{
+  static vercel:boolean;
+  static env:EnvType;
+  static server:ConfigServer = {} as ConfigServer;
+  static database:ConfigDatabase = {} as ConfigDatabase;
+}
+
+// check if run on vercel
+const runOnVercel = 
+  paramExistsAndNotNull('VERCEL_ENV', process.env) || 
+  paramExistsAndNotNull('__VERCEL_DEV_RUNNING', process.env);
+ConfigImpl.vercel = runOnVercel;
+
+if (ConfigImpl.vercel){
   switch(process.env.VERCEL_ENV?.trim()){
     case 'production':
-      tt = EnvEnum.prod;
+      ConfigImpl.env = EnvEnum.prod;
       break;
 
     default:
-      tt = EnvEnum.dev;
+      ConfigImpl.env = EnvEnum.dev;
   }
+
+  ConfigImpl.server.host = process.env.HOST ?? 'localhost';
+  ConfigImpl.server.port = parseInt(process.env.PORT ?? '3000');
+  ConfigImpl.database.host = process.env.DB_HOST ?? 'localhost';
+  ConfigImpl.database.user = process.env.DB_USR ?? '';
+  ConfigImpl.database.password = process.env.DB_PWD ?? '';
+  ConfigImpl.database.port = parseInt(process.env.DB_PORT ?? '3306');
+  ConfigImpl.database.max_pool = parseInt(process.env.DB_POOL ?? '5');
+  ConfigImpl.database.dialect = process.env.DB_DIALECT ?? 'mysql';
+  ConfigImpl.database.schema = process.env.DB_SCHEMA ?? '';
 }
 else{
-  if (EnvEnum.dev === process.env.NODE_ENV?.trim()){
-    tt = EnvEnum.dev;
+  switch(process.env.NODE_ENV?.trim()){
+    case EnvEnum.prod:
+      ConfigImpl.env = EnvEnum.prod;
+      break;
+
+    case EnvEnum.test:
+      ConfigImpl.env = EnvEnum.test;
+      break;
+
+    case EnvEnum.dev:
+    default:
+      ConfigImpl.env = EnvEnum.dev;
+      break;
   }
-  else if (EnvEnum.prod === process.env.NODE_ENV?.trim()){
-    tt = EnvEnum.prod;
-  }
-  else if (EnvEnum.test === process.env.NODE_ENV?.trim()){
-    tt = EnvEnum.test;
-  }
-  else{
-    throw ("Unknown Environment");
-  }
+  
+  const filePath = path.resolve(process.cwd(), `.env.${ConfigImpl.env}`);
+  const loaded:any = {};
+
+  dotenv.config({ path: filePath, override: true, processEnv: loaded});
+  ConfigImpl.server.host = loaded.SERVER_HOST! ?? 'localhost';
+  ConfigImpl.server.port = parseInt(loaded.SERVER_PORT ?? '3000');
+  ConfigImpl.database.host = loaded.DB_HOST ?? 'localhost';
+  ConfigImpl.database.user = loaded.DB_USR ?? '';
+  ConfigImpl.database.password = loaded.DB_PWD ?? '';
+  ConfigImpl.database.port = parseInt(loaded.DB_PORT ?? '3306');
+  ConfigImpl.database.max_pool = parseInt(loaded.DB_POOL ?? '5');
+  ConfigImpl.database.dialect = loaded.DB_DIALECT ?? 'mysql';
+  ConfigImpl.database.schema = loaded.DB_SCHEMA ?? '';
 }
 
-export const type:EnvType =  tt;
-export const filePath = path.resolve(process.cwd(), `.env.${type}`);
-
-if (runOnVercel){
-  process.env.SERVER_PORT = process.env.PORT;
-}
-else{
-  dotenv.config({ path: filePath, override: true });
-}
-
-export default process.env;
+export default ConfigImpl;
