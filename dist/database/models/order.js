@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from "./pool.js";
-import { tableNameConsignment, tableNameConsignmentDetails, tableNameConsignmentPayments, tableNameConsignmentSold } from "../migrations/20260331101858-create_table_orders.js";
-export class IConsigment extends Model {
+import { tableNameOrders, tableNameOrderDetails, tableNameOrderRealizations, tableNameOrderPayments } from "../migrations/20260331101858-create_table_orders.js";
+export class IOrder extends Model {
     ammount() {
         const details = this.products;
         let amm = 0;
@@ -11,28 +11,28 @@ export class IConsigment extends Model {
         return amm;
     }
 }
-export class IConsignmentDetail extends Model {
+export class IOrderDetail extends Model {
 }
-export class IConsignmentSold extends Model {
+export class IOrderRealization extends Model {
 }
 export const PaymentMethod = {
     cash: 0,
     accountTransfer: 1
 };
-export class IConsignmentPayed extends Model {
+export class IOrderPayment extends Model {
 }
-IConsigment.init({
+IOrder.init({
     id: { type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true },
     date: { type: DataTypes.DATE, allowNull: false },
     partnerId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false },
     shipmentDate: { type: DataTypes.DATE, allowNull: true, defaultValue: null },
 }, {
     sequelize,
-    tableName: tableNameConsignment,
+    tableName: tableNameOrders,
     timestamps: true,
     paranoid: true
 });
-IConsignmentDetail.init({
+IOrderDetail.init({
     id: { type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true },
     orderId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false },
     productId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false },
@@ -40,11 +40,11 @@ IConsignmentDetail.init({
     price: { type: DataTypes.DOUBLE.UNSIGNED, allowNull: false },
 }, {
     sequelize,
-    tableName: tableNameConsignmentDetails,
+    tableName: tableNameOrderDetails,
     timestamps: true,
     paranoid: true
 });
-IConsignmentSold.init({
+IOrderRealization.init({
     id: { type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true },
     orderId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false },
     productId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false },
@@ -53,11 +53,11 @@ IConsignmentSold.init({
     returnQty: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
 }, {
     sequelize,
-    tableName: tableNameConsignmentSold,
+    tableName: tableNameOrderRealizations,
     timestamps: true,
     paranoid: true
 });
-IConsignmentPayed.init({
+IOrderPayment.init({
     id: { type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true },
     orderId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false },
     method: { type: DataTypes.TINYINT, allowNull: false },
@@ -65,7 +65,7 @@ IConsignmentPayed.init({
     ammount: { type: DataTypes.DOUBLE, allowNull: false },
 }, {
     sequelize,
-    tableName: tableNameConsignmentPayments,
+    tableName: tableNameOrderPayments,
     timestamps: true,
     paranoid: true
 });

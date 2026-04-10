@@ -8,14 +8,14 @@ import {
 
 import sequelize from './pool.ts'
 import { 
-  tableNameConsignment, 
-  tableNameConsignmentDetails, 
-  tableNameConsignmentPayments,
-  tableNameConsignmentSold } from '../migrations/20260331101858-create_table_orders.ts';
+  tableNameOrders, 
+  tableNameOrderDetails, 
+  tableNameOrderRealizations,
+  tableNameOrderPayments } from '../migrations/20260331101858-create_table_orders.ts';
 import { IUser } from './user.ts';
 import { IPartner } from './partner.ts';
 
-export class IConsigment extends Model<InferAttributes<IConsigment>, InferCreationAttributes<IConsigment>> {
+export class IOrder extends Model<InferAttributes<IOrder>, InferCreationAttributes<IOrder>> {
 
   declare id: CreationOptional<number>
   declare date: Date
@@ -25,9 +25,9 @@ export class IConsigment extends Model<InferAttributes<IConsigment>, InferCreati
   declare salesPerson: NonAttribute<IUser>
 
   declare partner: NonAttribute<IPartner>
-  declare products: NonAttribute<IConsignmentDetail[]>
-  declare solds: NonAttribute<IConsignmentSold[]>
-  declare payments: NonAttribute<IConsignmentPayed[]>;
+  declare products: NonAttribute<IOrderDetail[]>
+  declare solds: NonAttribute<IOrderRealization[]>
+  declare payments: NonAttribute<IOrderPayment[]>;
 
   ammount(): number{
     const details = this.products;
@@ -39,7 +39,7 @@ export class IConsigment extends Model<InferAttributes<IConsigment>, InferCreati
   }
 }
 
-export class IConsignmentDetail extends Model<InferAttributes<IConsignmentDetail>, InferCreationAttributes<IConsignmentDetail>> {
+export class IOrderDetail extends Model<InferAttributes<IOrderDetail>, InferCreationAttributes<IOrderDetail>> {
 
   declare id: CreationOptional<number>
   declare orderId: bigint
@@ -47,11 +47,11 @@ export class IConsignmentDetail extends Model<InferAttributes<IConsignmentDetail
   declare qty: number
   declare price: number
 
-  declare consign: NonAttribute<IConsigment>;
+  declare order: NonAttribute<IOrder>;
 
 }
 
-export class IConsignmentSold extends Model<InferAttributes<IConsignmentSold>, InferCreationAttributes<IConsignmentSold>> {
+export class IOrderRealization extends Model<InferAttributes<IOrderRealization>, InferCreationAttributes<IOrderRealization>> {
 
   declare id: CreationOptional<number>
   declare orderId: number
@@ -60,7 +60,7 @@ export class IConsignmentSold extends Model<InferAttributes<IConsignmentSold>, I
   declare soldPrice: number
   declare returnQty: number
 
-  declare consign: NonAttribute<IConsigment>;
+  declare order: NonAttribute<IOrder>;
 
 }
 
@@ -71,7 +71,7 @@ export const PaymentMethod = {
 
 export type PaymentMethodType = typeof PaymentMethod[keyof typeof PaymentMethod];
 
-export class IConsignmentPayed extends Model<InferAttributes<IConsignmentPayed>, InferCreationAttributes<IConsignmentPayed>> {
+export class IOrderPayment extends Model<InferAttributes<IOrderPayment>, InferCreationAttributes<IOrderPayment>> {
 
   declare id: CreationOptional<number>
   declare orderId: bigint
@@ -79,22 +79,22 @@ export class IConsignmentPayed extends Model<InferAttributes<IConsignmentPayed>,
   declare acc: string|null
   declare ammount: number
 
-  declare consign: NonAttribute<IConsigment>;
+  declare order: NonAttribute<IOrder>;
 }
 
-IConsigment.init({
+IOrder.init({
   id: {type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true},
   date: {type: DataTypes.DATE, allowNull: false},
   partnerId: {type: DataTypes.BIGINT.UNSIGNED, allowNull: false},
   shipmentDate: {type: DataTypes.DATE, allowNull: true, defaultValue: null},
 },{
   sequelize,
-  tableName: tableNameConsignment,
+  tableName: tableNameOrders,
   timestamps: true,
   paranoid: true
 });    
 
-IConsignmentDetail.init({
+IOrderDetail.init({
   id: {type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true},
   orderId: {type: DataTypes.BIGINT.UNSIGNED, allowNull: false},
   productId: {type: DataTypes.BIGINT.UNSIGNED, allowNull: false},
@@ -102,12 +102,12 @@ IConsignmentDetail.init({
   price: {type: DataTypes.DOUBLE.UNSIGNED, allowNull: false},
 },{
   sequelize,
-  tableName: tableNameConsignmentDetails,
+  tableName: tableNameOrderDetails,
   timestamps: true,
   paranoid: true
 });
 
-IConsignmentSold.init({
+IOrderRealization.init({
   id: {type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true},
   orderId: {type: DataTypes.BIGINT.UNSIGNED, allowNull: false},
   productId: {type: DataTypes.BIGINT.UNSIGNED, allowNull: false},
@@ -116,12 +116,12 @@ IConsignmentSold.init({
   returnQty: {type: DataTypes.INTEGER.UNSIGNED, allowNull: false},
 },{
   sequelize,
-  tableName: tableNameConsignmentSold,
+  tableName: tableNameOrderRealizations,
   timestamps: true,
   paranoid: true
 });
 
-IConsignmentPayed.init({
+IOrderPayment.init({
   id: {type: DataTypes.BIGINT.UNSIGNED, primaryKey: true, autoIncrement: true},
   orderId: {type: DataTypes.BIGINT.UNSIGNED, allowNull: false},
   method: {type: DataTypes.TINYINT, allowNull: false},
@@ -129,7 +129,7 @@ IConsignmentPayed.init({
   ammount: {type: DataTypes.DOUBLE, allowNull: false},
 },{
   sequelize,
-  tableName: tableNameConsignmentPayments,
+  tableName: tableNameOrderPayments,
   timestamps: true,
   paranoid: true
 })

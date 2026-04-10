@@ -6,7 +6,7 @@ import MIG_USER from "../../../database/migrations/20260326152754-create_table_u
 import MIG_PARTNER from "../../../database/migrations/20260331092041-create_table_partners.js";
 import MIG_PRODUCT from "../../../database/migrations/20260331093945-create_table_products.js";
 import MIG_ORDER from "../../../database/migrations/20260331101858-create_table_orders.js";
-import { sequelize, IUser, IPartner, IProduct, IConsigment, IConsignmentDetail, IConsignmentPayed } from "../../../database/models/db.js";
+import { sequelize, IUser, IPartner, IProduct, IOrder, IOrderDetail, IOrderPayment } from "../../../database/models/db.js";
 import { UserRole } from "../../../database/models/user.js";
 import { PaymentMethod } from "../../../database/models/order.js";
 const fakeProductCategories = ['hello', 'yooo', 'zzzzzz'];
@@ -64,21 +64,21 @@ describe('> database/models/order.ts', () => {
         await MIG_PARTNER.down(sequelize.getQueryInterface());
         await MIG_PRODUCT.down(sequelize.getQueryInterface());
     });
-    it('create table `consignment`', async function () {
+    it('create table `orders`', async function () {
         this.timeout(5000);
         await MIG_ORDER.up(sequelize.getQueryInterface());
         await new Promise(resolve => setTimeout(resolve, 2000));
     });
-    it('create new IConsigment', async () => {
-        fakeOrder = await IConsigment.create({
+    it('create new IOrder', async () => {
+        fakeOrder = await IOrder.create({
             date: new Date(),
             partnerId: BigInt(fakePartner.id),
         });
-        const instance = await IConsigment.findByPk(fakeOrder.id, { rejectOnEmpty: true });
+        const instance = await IOrder.findByPk(fakeOrder.id, { rejectOnEmpty: true });
         expect(instance.id).equal(fakeOrder.id);
         // adding fake details
         for (var i = 0; i < faker.number.int({ min: 2, max: fakeProducts.length }); i++) {
-            const xx = await IConsignmentDetail.create({
+            const xx = await IOrderDetail.create({
                 orderId: BigInt(instance.id),
                 productId: BigInt(fakeProducts[i].id),
                 qty: faker.number.int({ min: 100, max: 10000 }),
@@ -87,21 +87,21 @@ describe('> database/models/order.ts', () => {
             fakeAmmount += xx.price * xx.qty;
         }
         // adding fake payments
-        const xx = await IConsignmentPayed.create({
+        const xx = await IOrderPayment.create({
             orderId: BigInt(instance.id),
             ammount: fakeAmmount,
             method: PaymentMethod.accountTransfer,
             acc: "3224324324324"
         });
     });
-    it('association: IConsigment `partner` ', async () => {
-        var sp = await IConsigment.findByPk(1, { include: ['partner'] });
+    it('association: IOrder `partner` ', async () => {
+        var sp = await IOrder.findByPk(1, { include: ['partner'] });
         expect(sp.partner?.id).equal(fakePartner.id);
         expect(sp.partner?.storeAddr).equal(fakePartner.storeAddr);
         // console.log(sp!.partner?.storeAddr == fakePartner.storeAddr, sp!.partner?.storeAddr, '=', fakePartner.storeAddr)
     });
-    it('association: IConsigment `products` ', async () => {
-        var sp = await IConsigment.findByPk(1, { include: ['products'] });
+    it('association: IOrder `products` ', async () => {
+        var sp = await IOrder.findByPk(1, { include: ['products'] });
         expect(sp?.products).not.empty;
         expect(sp?.products?.length).greaterThan(0);
         expect(fakeAmmount).equal(sp.ammount());
@@ -110,16 +110,16 @@ describe('> database/models/order.ts', () => {
         //   console.log(sp!.products![i]);
         // }
     });
-    it('association: IConsigment `payments` ', async () => {
-        var sp = await IConsigment.findByPk(1, { include: ['products', 'payments'] });
+    it('association: IOrder `payments` ', async () => {
+        var sp = await IOrder.findByPk(1, { include: ['products', 'payments'] });
         // console.log(sp!.payments);
         expect(sp.payments).not.empty;
         expect(sp.payments.length).equal(1);
         expect(Number(sp.payments.at(0).ammount)).equal(Number(sp.ammount()));
     });
-    it('association: IConsignmentDetail `consign` ', async () => {
-        var xx = await IConsignmentDetail.findByPk(1, { include: ['consign'] });
-        expect(xx?.consign?.id).equal(fakeOrder.id);
+    it('association: IOrderDetail `consign` ', async () => {
+        var xx = await IOrderDetail.findByPk(1, { include: ['order'] });
+        expect(xx?.order?.id).equal(fakeOrder.id);
         // console.log(xx?.order);
     });
     it('drop table `orders`', async function () {
