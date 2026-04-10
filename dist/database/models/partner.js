@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import sequelize from "./pool.js";
 import { tableName } from "../migrations/20260331092041-create_table_partners.js";
 export class IPartner extends Model {
@@ -21,4 +21,3 @@ IPartner.init({
     timestamps: true,
     paranoid: true
 });
-//# sourceMappingURL=partner.js.map

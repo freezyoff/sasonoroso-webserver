@@ -23,4 +23,3 @@ router.post('/partner/fetch', PartnerCtrl.fetchValidation, PartnerCtrl.fetchHand
 router.post('/partner/save', PartnerCtrl.saveValidation, PartnerCtrl.saveHandler);
 router.post('/partner/remove', PartnerCtrl.removeValidation, PartnerCtrl.removeHandler);
 export default router;
-//# sourceMappingURL=api.js.map

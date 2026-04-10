@@ -25,4 +25,3 @@ export default {
         await queryInterface.dropTable(tableName);
     }
 };
-//# sourceMappingURL=20260331092041-create_table_partners.js.map

@@ -17,4 +17,3 @@ IProduct.init({
     timestamps: true,
     paranoid: true
 });
-//# sourceMappingURL=product.js.map

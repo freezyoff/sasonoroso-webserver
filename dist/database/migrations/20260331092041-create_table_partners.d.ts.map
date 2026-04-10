@@ -1,1 +1,0 @@
-{"version":3,"file":"20260331092041-create_table_partners.d.ts","sourceRoot":"","sources":["../../../src/database/migrations/20260331092041-create_table_partners.ts"],"names":[],"mappings":"AAEA,OAAO,EAAyC,KAAK,cAAc,EAAE,MAAM,WAAW,CAAC;AAEvF,eAAO,MAAM,SAAS,aAAa,CAAC;AAEpC,gDAAgD;;uBAErB,cAAc;yBAmBZ,cAAc;;AApB3C,wBAuBE"}

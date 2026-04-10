@@ -6,9 +6,7 @@ import sequelize from "../../database/models/pool.js";
 const expect = chai.expect;
 import MIG_USER from "../../database/migrations/20260326152754-create_table_user.js";
 import { faker } from '@faker-js/faker';
-import { IUser } from "../../database/models/db.js";
 import { UserRole } from "../../database/models/user.js";
-import { log } from 'node:console';
 const wrongData = {
     usrName: "hello",
     usrPwd: "hello",
@@ -105,7 +103,7 @@ describe('> http: user.js', () => {
             .send({})
             .set('Accept', 'application/json')
             .expect(200);
-        expect(response.body.length).equal(loop);
+        expect(response.body.length).equal(loop + 1);
         // log("fetch: all ", response.body);
     });
     it('fetch: limit', async () => {
@@ -140,9 +138,8 @@ describe('> http: user.js', () => {
             .set('Accept', 'application/json')
             .expect(200);
         expect(response.body.length).equal(2);
-        expect(response.body.at(0).id).equal(11);
-        expect(response.body.at(1).id).equal(10);
+        expect(response.body.at(0).id).equal(11 + 1);
+        expect(response.body.at(1).id).equal(10 + 1);
         // log("fetch: limit offset order", response.body);
     });
 });
-//# sourceMappingURL=user.spec.js.map

@@ -1,8 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from "./pool.js";
 import { tableNameConsignment, tableNameConsignmentDetails, tableNameConsignmentPayments, tableNameConsignmentSold } from "../migrations/20260331101858-create_table_orders.js";
-import { IUser } from "./user.js";
-import { IPartner } from "./partner.js";
 export class IConsigment extends Model {
     ammount() {
         const details = this.products;
@@ -71,4 +69,3 @@ IConsignmentPayed.init({
     timestamps: true,
     paranoid: true
 });
-//# sourceMappingURL=order.js.map

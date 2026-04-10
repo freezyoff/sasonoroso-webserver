@@ -55,4 +55,3 @@ export default {
         await queryInterface.dropTable(tableNameConsignment);
     }
 };
-//# sourceMappingURL=20260331101858-create_table_orders.js.map

@@ -1,8 +1,6 @@
-import {} from 'express';
 import { IUser, UserRole } from "../database/models/user.js";
 import { paramExistsAndNotNull } from "./helpers.js";
 import crypto from 'crypto';
-import { log } from 'console';
 export const fetchValidation = (req, res, next) => {
     // if (paramExistsAndNotNull('body', req)){
     // 	const body:UserFetchReqParams = req.body;
@@ -18,6 +16,7 @@ export const fetchValidation = (req, res, next) => {
 };
 export const fetchHandler = async (req, res) => {
     const body = req.body;
+    // console.log(body);
     let opt = {};
     if (paramExistsAndNotNull('order', body)) {
         Object.assign(opt, { order: body.order });
@@ -147,4 +146,3 @@ export const saveHandler = async (req, res) => {
     }
     res.status(404).end();
 };
-//# sourceMappingURL=user.js.map

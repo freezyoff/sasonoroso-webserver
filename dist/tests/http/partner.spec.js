@@ -1,12 +1,11 @@
 import * as chai from 'chai';
 import request from 'supertest';
 import { describe } from 'mocha';
-import { server, app } from "../../index.js";
+import { app } from "../../index.js";
 import sequelize from "../../database/models/pool.js";
 const expect = chai.expect;
 import MIG_PARTNER from "../../database/migrations/20260331092041-create_table_partners.js";
 import { faker } from '@faker-js/faker';
-import { log } from 'node:console';
 import { IPartner } from "../../database/models/partner.js";
 describe('> http: user.js', () => {
     before(async () => {
@@ -15,7 +14,6 @@ describe('> http: user.js', () => {
     });
     after(async () => {
         await MIG_PARTNER.down(sequelize.getQueryInterface());
-        server.close();
     });
     it('save: empty JSON', async () => {
         await request(app).post(`/api/partner/save`)
@@ -129,4 +127,3 @@ describe('> http: user.js', () => {
         // log("fetch: limit offset order", response.body);
     });
 });
-//# sourceMappingURL=partner.spec.js.map

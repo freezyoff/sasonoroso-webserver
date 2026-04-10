@@ -11,4 +11,3 @@ IConsignmentDetail.belongsTo(IConsigment, { foreignKey: 'id', as: 'consign' });
 IConsignmentSold.belongsTo(IConsigment, { foreignKey: 'id', as: 'consign' });
 IConsignmentPayed.belongsTo(IConsigment, { foreignKey: 'id', as: 'consign' });
 export { sequelize, IUser, IProduct, IPartner, IConsigment, IConsignmentDetail, IConsignmentPayed, IConsignmentSold };
-//# sourceMappingURL=db.js.map

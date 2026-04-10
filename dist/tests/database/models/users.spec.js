@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import supertest from 'supertest';
 import { describe } from 'mocha';
 import crypto from 'crypto';
 import MIG from "./../../../database/migrations/20260326152754-create_table_user.js";
@@ -23,9 +22,9 @@ describe('> database/models/user.ts', () => {
             personPhone: faker.phone.number()
         };
         const newUser = await IUser.create(data);
-        const instance = await IUser.findByPk(1, { rejectOnEmpty: true });
+        const instance = await IUser.findByPk(newUser.id, { rejectOnEmpty: true });
         expect(instance.id).equal(newUser.id);
-        expect(data.usrName).equal(instance.usrName);
+        expect(instance.usrName).equal(data.usrName);
     });
     it('drop table `users`', async function () {
         this.timeout(5000);
@@ -33,4 +32,3 @@ describe('> database/models/user.ts', () => {
         // await new Promise(resolve => setTimeout(resolve, 2000));
     });
 });
-//# sourceMappingURL=users.spec.js.map

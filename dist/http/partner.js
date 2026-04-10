@@ -1,6 +1,4 @@
-import {} from 'express';
-import { paramExists, paramExistsAndNotNull } from "./helpers.js";
-import { log } from 'console';
+import { paramExistsAndNotNull } from "./helpers.js";
 import { IPartner } from "../database/models/db.js";
 export const fetchValidation = (req, res, next) => {
     next();
@@ -126,4 +124,3 @@ export const saveHandler = async (req, res) => {
     res.status(201).json(record.toJSON()).end();
     return;
 };
-//# sourceMappingURL=partner.js.map

@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import supertest from 'supertest';
 import { describe } from 'mocha';
-import crypto from 'crypto';
 import { sequelize, IPartner } from "../../../database/models/db.js";
 import MIG from "../../../database/migrations/20260331092041-create_table_partners.js";
 import { faker } from '@faker-js/faker';
@@ -48,4 +46,3 @@ describe('> database/models/partner.ts', () => {
         // await new Promise(resolve => setTimeout(resolve, 2000));
     });
 });
-//# sourceMappingURL=partners.spec.js.map

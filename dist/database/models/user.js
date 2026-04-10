@@ -25,4 +25,3 @@ IUser.init({
     timestamps: true,
     paranoid: true
 });
-//# sourceMappingURL=user.js.map

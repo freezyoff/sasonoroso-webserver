@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 import { describe } from 'mocha';
-import crypto, { generateKey } from 'crypto';
+import crypto from 'crypto';
 import { faker } from '@faker-js/faker';
 import MIG_USER from "../../../database/migrations/20260326152754-create_table_user.js";
 import MIG_PARTNER from "../../../database/migrations/20260331092041-create_table_partners.js";
 import MIG_PRODUCT from "../../../database/migrations/20260331093945-create_table_products.js";
 import MIG_ORDER from "../../../database/migrations/20260331101858-create_table_orders.js";
-import { sequelize, IUser, IPartner, IProduct, IConsigment, IConsignmentDetail, IConsignmentSold, IConsignmentPayed } from "../../../database/models/db.js";
+import { sequelize, IUser, IPartner, IProduct, IConsigment, IConsignmentDetail, IConsignmentPayed } from "../../../database/models/db.js";
 import { UserRole } from "../../../database/models/user.js";
 import { PaymentMethod } from "../../../database/models/order.js";
 const fakeProductCategories = ['hello', 'yooo', 'zzzzzz'];
@@ -128,4 +128,3 @@ describe('> database/models/order.ts', () => {
         // await new Promise(resolve => setTimeout(resolve, 2000));
     });
 });
-//# sourceMappingURL=orders.spec.js.map

@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import supertest from 'supertest';
 import { describe } from 'mocha';
-import crypto from 'crypto';
 import { sequelize, IProduct } from "../../../database/models/db.js";
 import MIG from "../../../database/migrations/20260331093945-create_table_products.js";
 import { faker } from '@faker-js/faker';
@@ -41,4 +39,3 @@ describe('> database/models/product.ts', () => {
         // await new Promise(resolve => setTimeout(resolve, 2000));
     });
 });
-//# sourceMappingURL=products.spec.js.map

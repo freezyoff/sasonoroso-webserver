@@ -6,7 +6,6 @@ import sequelize from "../../database/models/pool.js";
 const expect = chai.expect;
 import MIG_PRODUCT from "../../database/migrations/20260331093945-create_table_products.js";
 import { faker } from '@faker-js/faker';
-import { log } from 'node:console';
 import { IProduct } from "../../database/models/db.js";
 const categories = ['Electronics', 'Books', 'Clothing', 'Home & Garden', 'Sports'];
 describe('> http: user.js', () => {
@@ -132,4 +131,3 @@ describe('> http: user.js', () => {
         // log("fetch: limit offset order", response.body);
     });
 });
-//# sourceMappingURL=product.spec.js.map

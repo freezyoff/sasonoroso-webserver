@@ -1,7 +1,4 @@
-import {} from 'express';
 import { paramExistsAndNotNull } from "./helpers.js";
-import crypto from 'crypto';
-import { log } from 'console';
 import { IProduct } from "../database/models/product.js";
 export const fetchValidation = (req, res, next) => {
     next();
@@ -101,4 +98,3 @@ export const saveHandler = async (req, res) => {
     res.status(201).json(record.toJSON()).end();
     return;
 };
-//# sourceMappingURL=product.js.map

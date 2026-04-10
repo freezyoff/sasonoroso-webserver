@@ -1,10 +1,11 @@
 'use strict';
-import { QueryInterface, Sequelize, BIGINT, STRING, ENUM, DATE } from "sequelize";
+import { Sequelize, BIGINT, STRING, ENUM, DATE } from "sequelize";
+import crypto from 'crypto';
 export const tableName = "users";
 /** @type {import('sequelize-cli').Migration} */
 export default {
     async up(queryInterface) {
-        queryInterface.createTable(tableName, {
+        await queryInterface.createTable(tableName, {
             id: { type: BIGINT.UNSIGNED, allowNull: false, autoIncrement: true, primaryKey: true, },
             usrName: { type: STRING(50), allowNull: false, },
             usrPwd: { type: STRING(200), allowNull: false, },
@@ -17,9 +18,19 @@ export default {
             updatedAt: { allowNull: false, type: DATE, defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') },
             deletedAt: { type: DATE, allowNull: true, defaultValue: null },
         });
+        await queryInterface.bulkInsert(tableName, [
+            {
+                usrName: 'root',
+                usrPwd: crypto.createHash('sha512').update('Yousummonme3105').digest('hex'),
+                usrToken: crypto.createHash('sha512').update('Yousummonme3105').digest('hex'),
+                usrRole: 'super',
+                personIdNumber: '3578033105840001',
+                personName: 'musa hadi',
+                personPhone: '+62 8113209855'
+            }
+        ], {});
     },
     async down(queryInterface) {
         await queryInterface.dropTable(tableName);
     }
 };
-//# sourceMappingURL=20260326152754-create_table_user.js.map

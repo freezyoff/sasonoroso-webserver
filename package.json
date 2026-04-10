@@ -16,15 +16,23 @@
   "license": "ISC",
   "author": "freezyoff",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "SET NODE_ENV=production && node dist/index.js",
-    "dev": "SET NODE_ENV=development && nodemon --exec ts-node --esm src/index.ts",
+    "build": "npx tsc",
+    "dev": "SET NODE_ENV=development && node dist/index.js",
+    "ts:dev": "SET NODE_ENV=development && nodemon --exec ts-node --esm src/index.ts",
+
     "dev:db:migrate": "SET NODE_ENV=development && npx sequelize db:migrate --env development",
     "dev:db:undo:all": "SET NODE_ENV=development && npx sequelize db:migrate:undo:all --env development",
-    "build": "npx tsc",
+
+    "prod:db:migrate": "SET NODE_ENV=production && npx sequelize db:migrate --env production",
+
+    "ts:test": "SET NODE_ENV=test && ts-mocha --",
+    "ts:test:all": "SET NODE_ENV=test && ts-mocha --recursive src/tests/**/**.spec.ts",
+    
     "test": "SET NODE_ENV=test && ts-mocha --",
-    "test:all": "SET NODE_ENV=test && ts-mocha --recursive src/tests/**/**.spec.ts"
+    "test:all": "SET NODE_ENV=test && ts-mocha --recursive dist/tests/**/**.spec.js"
   },
   "dependencies": {
     "dotenv": "^17.3.1",

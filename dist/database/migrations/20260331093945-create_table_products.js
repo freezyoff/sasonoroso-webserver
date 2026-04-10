@@ -20,4 +20,3 @@ export default {
         await queryInterface.dropTable(tableName);
     }
 };
-//# sourceMappingURL=20260331093945-create_table_products.js.map

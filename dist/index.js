@@ -1,24 +1,28 @@
 import express from 'express'; //{ Request, Response }
-import * as dotenv from 'dotenv';
-import * as path from 'path';
-import Config, { filePath as ConfigPath, type as ConfigType } from "./tests/config.js";
+import Config, { EnvEnum } from "./config.js";
 /**
  * load configuration files
  */
-console.log(`Loading .env file: ${ConfigType}`);
-console.log(`Host URL: ${Config.SERVER_HOST}`);
-console.log(`Database URL: ${Config.DB_HOST}`);
+if (Config.env == EnvEnum.dev || Config.env == EnvEnum.test) {
+    console.log(Config);
+}
 /**
  * Load Express
  */
-const app = express();
+export const app = express();
 import ApiRouter from "./routes/api.js";
 app.use('/api', ApiRouter);
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    var str = `<h1>Hello World from SASONOROSO!</h1>`;
+    str += `<h3>${Config.database.host}</h3>`;
+    str += `<h3>${Config.database.user}</h3>`;
+    str += `<h3>${Config.database.port}</h3>`;
+    str += `<h3>${Config.database.max_pool}</h3>`;
+    str += `<h3>${Config.database.dialect}</h3>`;
+    str += `<h3>${Config.database.schema}</h3>`;
+    res.send(str);
 });
-const server = app.listen(Config.SERVER_PORT, () => {
-    console.log(`Example app listening on port ${Config.SERVER_PORT}`);
+export const server = app.listen(Config.server.port, () => {
+    console.log(`Sasonoroso listening on port ${Config.server.port}`);
 });
-export { app, server };
-//# sourceMappingURL=index.js.map
+export default app;
